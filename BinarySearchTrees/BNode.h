@@ -18,7 +18,7 @@ struct BNode
 	int data;
 	BNode * left;
 	BNode * right;
-  BNode(int d) : data(d), left(NULL), right(NULL){};
+	BNode(int d) : data(d), left(NULL), right(NULL){};
 };
 
 class BST
@@ -35,7 +35,7 @@ private:
 	BNode * getParent(int) const;//returns pointer to parent of value
 	int getMinRight(BNode *) const;//returns min value in right subtree
  
-  void inorder(BNode *) const;//prints tree inorder 
+	void inorder(BNode *) const;//prints tree inorder 
 	void preorder(BNode *) const;//prints tree preorder
 	void postorder(BNode *) const;//prints tree postorder
 	BNode * root;
