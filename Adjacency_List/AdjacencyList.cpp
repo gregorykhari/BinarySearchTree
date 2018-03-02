@@ -19,7 +19,7 @@ AdjacencyList::AdjacencyList()
 	
 	//initialize adj_array to size of graph input
 	adj_size = size;
-	current_index = 0;
+	next_pos = 0;
 
 	adj_list.resize(adj_size);
 	
@@ -37,15 +37,22 @@ AdjacencyList::~AdjacencyList()
 //function to insert node into next available position in adj_list
 void AdjacencyList::insertNode(int value)
 {
+	if(next_pos == -1)
+	{
+		std::cout << "Adjacency List full - cannot insert new node" << std::endl;
+		return;
+	}
+	
 	//create new node to insert 
 	ANode * new_node = new ANode;
 	new_node -> value = value;
 	new_node -> next = NULL;
 	
 	//insert new node into adj_list
-	adj_list[current_index] = new_node;
-
-	current_index++;
+	adj_list[next_pos] = new_node;
+	
+	//update next Position
+	updateNextPosition();
 }
 
 //function to delete node from adj_list
@@ -61,8 +68,9 @@ void AdjacencyList::deleteNode(int value)
 		{	
 			adj_list[i] = NULL;
 		}
-
 	}
+	//update next available position in adj_list
+	updateNextPosition();
 }
 
 //function to add edge between two nodes
@@ -82,7 +90,8 @@ void AdjacencyList::addEdge(int source, int destination)
 	
 	//get index of source in adj_list
 	int source_loc = nodeLocation(source);
-	
+
+	//connect neighbour node (destination) to source node	
 	if(adj_list[source_loc] -> next == NULL){
 		adj_list[source_loc] -> next = neighbour_node;
 	} else {
@@ -137,7 +146,7 @@ bool AdjacencyList::nodeExists(int value)
 	return false;
 }
 
-//function returns the index of the node with value
+//function returns the index of the node with value, -1 if not found
 int AdjacencyList::nodeLocation(int value)
 {
 	for(int i = 0; i < adj_size; i++)
@@ -151,12 +160,15 @@ int AdjacencyList::nodeLocation(int value)
 	return -1;
 }
 
+//function returns true if destination is a neighbour of source
 bool AdjacencyList::isNeighbour(int source, int destination)
 {
+	//get index of source in adj_list
 	int source_loc = nodeLocation(source);
 	
 	ANode * cursor = adj_list[source_loc];
 
+	//step through all neighbours of source
 	while(cursor != NULL)
 	{
 		if(cursor -> value == destination)
@@ -200,3 +212,18 @@ void AdjacencyList::printList()
 	}
 	std::cout << "---" << std::endl;
 }
+
+//function to update the next available position in the adj_list
+void AdjacencyList::updateNextPosition()
+{
+	for(int i = 0; i < adj_size; i++)
+	{
+		if(adj_list[i] == NULL)
+		{
+			next_pos = i;
+			return;
+		}
+	}
+	//no space in adj_list
+	next_pos = -1;
+} 
