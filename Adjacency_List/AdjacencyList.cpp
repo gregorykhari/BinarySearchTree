@@ -83,8 +83,6 @@ void AdjacencyList::addEdge(int source, int destination)
 	//get index of source in adj_list
 	int source_loc = nodeLocation(source);
 	
-	//ANode * cursor = adj_list[source_loc];
-	
 	if(adj_list[source_loc] -> next == NULL){
 		adj_list[source_loc] -> next = neighbour_node;
 	} else {
@@ -106,14 +104,14 @@ void AdjacencyList::deleteEdge(int source, int destination)
 		return;
 	
 	//set pointer to first neighbour node of source 
-	ANode * precursor = adj_list[source];
+	ANode * precursor = adj_list[source_loc];
 	ANode * cursor = adj_list[source_loc] -> next;
 
 	while(cursor != NULL)
 	{
 		//if node with value destination is found, delete node and set node before to point to node after	
 		if(cursor -> value == destination){
-			precursor = cursor -> next;
+			precursor -> next = cursor -> next;
 			delete cursor;
 			return;
 		}
@@ -151,6 +149,24 @@ int AdjacencyList::nodeLocation(int value)
 			return i;
 	}	
 	return -1;
+}
+
+bool AdjacencyList::isNeighbour(int source, int destination)
+{
+	int source_loc = nodeLocation(source);
+	
+	ANode * cursor = adj_list[source_loc];
+
+	while(cursor != NULL)
+	{
+		if(cursor -> value == destination)
+		{
+			return true;
+		}
+		cursor = cursor -> next;
+	}
+	
+	return false;
 }
 
 //function to print the adj_list

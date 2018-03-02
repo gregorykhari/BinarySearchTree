@@ -21,7 +21,7 @@ void printMenu()
 	cout << "4. Delete Edge From  Between Two Nodes" << endl;
 	cout << "5. Print Adjacency List" << endl;
 	cout << "6. Check if Node Exists" << endl;
-	cout << "7. Check If Node B Is A Neighbour Of Node" << endl;
+	cout << "7. Check If Node B Is A Neighbour Of Node A" << endl;
 	cout << "OPTION: ";
 }
 
@@ -76,8 +76,7 @@ int main()
 					cout << "Node with value " << value << " exists" << endl;
 				else 
 					cout << "Node with value " << value << " does not exists" << endl;
-				break;
-			/*	
+				break;	
 			case 7:
 				cout << "Enter source of edge" << endl;
 				cin >> src;
@@ -91,7 +90,6 @@ int main()
 			default:
 				cout << "Invalid option entered" << endl;
 				break;
-		*/
 		}
 		
 		printMenu();
